@@ -43,53 +43,17 @@
     /* ==========================================================================
        Helium Modal styles
        ========================================================================== */
+    .helium-parallax{
+        position: relative;
+       }
+    .helium-parallax .parallax{
+        position: absolute;
+    }
+
     /* === essential styles === */
-    .modalholder{
-        position: absolute;
-        top:0;
-        left:0;
-        width:100%;
-        background-color: rgba(0,0,0,0.6);
-        z-index: 2000;
-        display: none;
-        }
-    .modalholder .modal{
-        position: absolute;
-        left: -9999px;
-        }
-    /* === customizable styles === */
-    .modalholder .modal{
-        background-color: #ffffff;
-        padding: 20px;
-        box-shadow: 0 4px 4px rgba(0,0,0,0.2);
-        }
-    .modalholder .modal a.close{
-        position: absolute;
-        top:3px;
-        right:6px;
-        font-weight: bold;
-        font-family: Arial, Helvetica, sans-serif;
-        text-decoration: none;
-        font-size: 20px;
-        line-height: 20px;
-        color: #222;
-        }
     </style>
 </head>
 <body style="margin:0;">
-    <div id="modalid" class="modalholder">
-        <div class="modal">
-            content for modal #1
-            <a href="" class="close">&times;</a>
-        </div>
-    </div>
-    <div id="modalid2" class="modalholder">
-        <div class="modal">
-            content for modal #2<br>
-            <a href="" title="" class="close2">additional close link</a>
-            <a href="" class="close">&times;</a>
-        </div>
-    </div>
     <h1>Helium-Modal</h1>
     <p>Helium-modal is a jQuery modal window script, developed by Harun Eggleton under the open source MIT licence.</p>
     <h2>Features:</h2>
@@ -101,10 +65,13 @@
         <li>Triggered through a link or javascript</li>
     </ul>
     <h2>Examples:</h2>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
     <p>
-    <a href="" data-mid="modalid">open modal #1</a>
-    <a href="" data-mid="modalid2">open modal #2</a>
+        <div id="your-parallax-id" class="helium-parallax">
+            <img src="http://placehold.it/200x100" alt="" class="parallax">
+        </div>
     </p>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
     <h2>Usage:</h2>
     <h3>1: include required files</h3>
     <p>include the following scripts as follows before the end of the BODY tag</p>
@@ -113,137 +80,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="js/helium.mutate.js"></script>
 <script src="js/helium.modal.js"></script></textarea>
-    <h3>2: Add required HTML</h3>
-    <p>add the following customizable modal template after your opening BODY tag</p>
-    <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:85px;">
-<div id="your-modal-id" class="modalholder">
-    <div class="modal">
-        content for your modal
-        <a href="" class="close">&amp;times;</a>
-    </div>
-</div></textarea>
-    <p>use the <em>data-mid</em> custom attribute on the link that you wish to trigger your modal</p>
-    <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:20px;">
-<a href="" data-mid="your-modal-id">your button text</a></textarea>
-    <h3>3: Add CSS</h3>
-    <p>Add the following CSS in main.css (or any desired css location)</p>
-    <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:490px;">
-/* ====================================================================
-   Helium Modal styles
-   ==================================================================== */
-/* === essential styles === */
-.modalholder{
-    position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    background-color: rgba(0,0,0,0.6);
-    z-index: 2000;
-    display: none;
-    }
-.modalholder .modal{
-    position: absolute;
-    left: -9999px;
-    }
-/* === customizable styles === */
-.modalholder .modal{
-    background-color: #ffffff;
-    padding: 20px;
-    box-shadow: 0 4px 4px rgba(0,0,0,0.2);
-    }
-.modalholder .modal a.close{
-    position: absolute;
-    top:3px;
-    right:6px;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-    text-decoration: none;
-    font-size: 20px;
-    line-height: 20px;
-    color: #222;
-    }
-</textarea>
-    <h3>4: initialize</h3>
-    <p>Place the follow before the end of the BODY tag to initialize all modals</p>
-    <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:180px;">
-<script type="text/javascript" charset="utf-8">
-$(function() {
-    $("*[data-mid]").each( function(){
-        $(this).heliumModal({
-            vert: 50,
-            speed: 500,
-            easing: 'swing',
-            onOpen: function(){ },  // callback for custom JS when modal opens
-            onClose: function(){ }  // callback for custom JS when modal close
-        });
-    });
-});
-</script></textarea>
-    <h3>Alternatives:  "I want an additional close or cancel button in my modal"</h3>
-    <p>just use the "close2" class on any element in your modal that should act as a close link. Like so&hellip;</p>
-    <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:100px;">
-<div id="your-modal-id" class="modalholder">
-    <div class="modal">
-        content for your modal<br>
-        <a href="" title="" class="close2">additional close link</a>
-        <a href="" class="close">&amp;times;</a>
-    </div>
-</div></textarea>
-    <h3>Alternatives:  "I want to open or close my modal via javascript"</h3>
-    <p>use the following jQuery inside any event</p>
-    <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:70px;">
-// to open ...
-$('*[data-mid="your-modal-id"]').heliumModal('openModal');
-// to close ...
-$('*[data-mid="your-modal-id"]').heliumModal('closeModal');</textarea>
-    <h3>Alternatives: "I dont want a open link" (e.g. an error modal)</h3>
-    <p>In this case add the data-mid attribute to the same element as "your-modal-id" in your HTML and trigger your modal via javascript (as described above)</p>
-    <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:85px;">
-<div id="your-modal-id" data-mid="your-modal-id" class="modalholder">
-    <div class="modal">
-        content for your modal
-        <a href="" class="close">&amp;times;</a>
-    </div>
-</div></textarea>
-    <h3>Alternatives:  "I want to initialize my modals separately"</h3>
-    <p>If you want a different initialization for each modal just remove the "each" wrapper from the initialization script like so&hellip;</p>
-    <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:180px;">
-<script type="text/javascript" charset="utf-8">
-$(function() {
-    // repeat for each of your modals ===============================
-    $("*[data-mid='your-modal-id-1']").heliumModal({
-        vert: 50,
-        speed: 500,
-        easing: 'swing',
-        onOpen: function(){ },  // callback for custom JS when modal opens
-        onClose: function(){ }  // callback for custom JS when modal close
-    });
-    // end repeat ===================================================
-});
-</script></textarea>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
     <script src="js/helium.mutate.js"></script>
-    <script src="js/helium.modal.js"></script>
+    <script src="js/helium.parallax.js"></script>
     <script type="text/javascript" charset="utf-8">
     $(function() {
-        $("*[data-mid]").each( function(){
-            $(this).heliumModal({
-                vert: 50,
-                speed: 500,
-                easing: 'swing',
-                onOpen: function(){ },
-                onClose: function(){ }
-            });
-        });
+        $('#your-parallax-id').heliumParallax();
     });
     $('.selector').click(function(){
         $(this).next().focus().select();

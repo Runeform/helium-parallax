@@ -8,9 +8,10 @@
 
 ;(function ( $, window, document, undefined ) {
   // Create defaults 
-  var pluginName = "heliumParalax",
+  var pluginName = "heliumParallax",
       defaults = {        
-      coeff: 0.9,
+      coeff: 0.5,     
+      hcoeff: 0.9,
       offsetTop: 100,
       offsetBottom: 100,
       offsetLeft: 0,
@@ -21,8 +22,11 @@
       currCenter: false,
       itemScroll: false,
       itemCenter: false,
+      item: false,
       paraStart: false,
-      paraEnd: false
+      paraEnd: false,
+      winHeight: false,
+      newTop: false
   };
 
   function Plugin ( element, options ) {
@@ -41,16 +45,35 @@
 //============================================================================
       init: function () {
         var orig = this;
-        this.vars.mid = '#' + this.element.getAttribute("data-mid");
 
+        this.vars.winHeight = $(window).height();
+        this.vars.item = $(this.element).children('.parallax');
+        this.vars.itemScroll = $(this.vars.item).offset().top;
+        this.vars.itemCenter = this.vars.itemScroll + (this.vars.item.height() / 2);
+
+        this.vars.paraStart = this.vars.itemCenter - (this.vars.offsetTop*this.vars.coeff);
+        this.vars.paraEnd = this.vars.itemCenter + (this.vars.offsetBottom*this.vars.coeff);
+$(this.vars.item).css('top', '-' + this.vars.offsetTop + 'px');
+        $(window).scroll(function(event) {
+            orig.parallax();
+        });
       },
 
 //============================================================================
-// openModal function.  
+// parallax function.  
 //============================================================================
-      openModal: function () {         
+      parallax: function () {         
         var orig = this;
-        this.calcMargin();
+        this.vars.currScroll = $(document).scrollTop();
+        this.vars.currCenter = this.vars.currScroll + (this.vars.winHeight / 2);
+
+
+        if (this.vars.currCenter > this.vars.paraStart && this.vars.currCenter < this.vars.paraEnd ){
+            this.vars.newTop = (this.vars.currCenter - this.vars.itemCenter);
+           $(this.vars.item).css('top',this.vars.newTop + 'px');
+
+        }
+
       }
   };
 
