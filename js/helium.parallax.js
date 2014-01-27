@@ -10,23 +10,22 @@
   // Create defaults 
   var pluginName = "heliumParallax",
       defaults = {        
-      coeff: 0.5,     
-      hcoeff: 0.9,
-      offsetTop: 100,
-      offsetBottom: 100,
-      offsetLeft: 0,
-      offsetRight: 0
+      coeff: 0,   
+      paraStart: 200,
+      paraEnd: 200,
+      hCoeff: 0.5
   },
   priv = {
-      currScroll: false,
+      currTop: false,
       currCenter: false,
-      itemScroll: false,
+      itemTop: false,
       itemCenter: false,
       item: false,
-      paraStart: false,
-      paraEnd: false,
       winHeight: false,
-      newTop: false
+      newTop: false,
+      newLeft: false,
+      startLeft: false,
+      startTop: false
   };
 
   function Plugin ( element, options ) {
@@ -46,15 +45,17 @@
       init: function () {
         var orig = this;
 
-        this.vars.winHeight = $(window).height();
         this.vars.item = $(this.element).children('.parallax');
-        this.vars.itemScroll = $(this.vars.item).offset().top;
-        this.vars.itemCenter = this.vars.itemScroll + (this.vars.item.height() / 2);
+        this.vars.itemTop = $(this.vars.item).offset().top;
+        this.vars.itemCenter = this.vars.itemTop + (this.vars.item.height() / 2);
+        this.vars.paraStart = this.vars.itemTop - this.vars.paraStart;
+        this.vars.paraEnd = this.vars.itemTop + this.vars.paraEnd;
 
-        this.vars.paraStart = this.vars.itemCenter - (this.vars.offsetTop*this.vars.coeff);
-        this.vars.paraEnd = this.vars.itemCenter + (this.vars.offsetBottom*this.vars.coeff);
-$(this.vars.item).css('top', '-' + this.vars.offsetTop + 'px');
-        $(window).scroll(function(event) {
+        this.vars.startTop = (this.vars.paraStart - this.vars.itemCenter) * this.vars.coeff;
+        $(this.vars.item).css('top', this.vars.startTop + 'px');
+        this.vars.startLeft = (this.vars.paraStart - this.vars.itemCenter) * this.vars.hCoeff;
+        $(this.vars.item).css('left', this.vars.startLeft + 'px');
+        $(window).on('scroll resize', function(event) {
             orig.parallax();
         });
       },
@@ -64,13 +65,14 @@ $(this.vars.item).css('top', '-' + this.vars.offsetTop + 'px');
 //============================================================================
       parallax: function () {         
         var orig = this;
-        this.vars.currScroll = $(document).scrollTop();
-        this.vars.currCenter = this.vars.currScroll + (this.vars.winHeight / 2);
-
-
+        this.vars.winHeight = $(window).height();
+        this.vars.currTop = $(document).scrollTop();
+        this.vars.currCenter = this.vars.currTop + (this.vars.winHeight / 2);
         if (this.vars.currCenter > this.vars.paraStart && this.vars.currCenter < this.vars.paraEnd ){
-            this.vars.newTop = (this.vars.currCenter - this.vars.itemCenter);
+            this.vars.newTop = (this.vars.currCenter - this.vars.itemCenter) * this.vars.coeff;
            $(this.vars.item).css('top',this.vars.newTop + 'px');
+            this.vars.newLeft = (this.vars.currCenter - this.vars.itemCenter) * this.vars.hCoeff;
+           $(this.vars.item).css('left',this.vars.newLeft + 'px');
 
         }
 
