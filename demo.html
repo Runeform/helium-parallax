@@ -45,12 +45,11 @@
        ========================================================================== */
     .helium-parallax{
         position: relative;
-       }
+    }  
     .helium-parallax .parallax{
         position: absolute;
     }
 
-    /* === essential styles === */
     </style>
 </head>
 <body style="margin:0;">
@@ -65,13 +64,10 @@
         <li>Triggered through a link or javascript</li>
     </ul>
     <h2>Examples:</h2>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <p>
-        <div id="your-parallax-id" class="helium-parallax">
-            <img src="http://placehold.it/200x100" alt="" class="parallax">
-        </div>
-    </p>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br>>>>>>>>><br>.<br>.<br>.<br>.<br>.<br>.<br>.
+            <div id="your-parallax-id" class="helium-parallax">
+            <img src="http://placehold.it/200x100" alt="" class="parallax" style="opacity:0.6" height="100">
+        </div><br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>>>>>>>><br><br><br><br><br><br><br>
     <h2>Usage:</h2>
     <h3>1: include required files</h3>
     <p>include the following scripts as follows before the end of the BODY tag</p>
@@ -79,7 +75,42 @@
 <textarea readonly name="" style="height:45px;">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="js/helium.mutate.js"></script>
-<script src="js/helium.modal.js"></script></textarea>
+<script src="js/helium.parallax.js"></script></textarea>
+    <h3>2: HTML</h3>
+    <p>Wrap your parallax element in div and use the div to position your element.  eg.</p>
+    <a href="" class="selector" title="">&#8595; select all</a>
+<textarea readonly name="" style="height:45px;">
+<div id="your-parallax-id" class="helium-parallax">
+    <img src="http://placehold.it/200x100" alt="" class="parallax">
+</div></textarea>
+    <h3>3: CSS</h3>
+    <p>include the following css in your primary CSS location.</p>
+    <a href="" class="selector" title="">&#8595; select all</a>
+<textarea readonly name="" style="height:120px;">
+/* ==========================================================================
+   Helium Modal styles
+   ========================================================================== */
+.helium-parallax{
+    position: relative;
+   }
+.helium-parallax .parallax{
+    position: absolute;
+}</textarea>
+    <h3>4: initialize</h3>
+    <p>Add the following intialization script in your footer, after included scripts. this example shows all available options.</p>
+    <a href="" class="selector" title="">&#8595; select all</a>
+<textarea readonly name="" style="height:130px;">
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    $('#your-parallax-id').heliumParallax({        
+      coeff: 0.5,      // coefficient of vertical parallax movement
+      paraStart: 200,  // parallax lead in distance
+      paraEnd: 200,    // parallax lead out distance
+      hCoeff: 0        // coefficient of horizontal parallax movement
+    });
+});
+</script></textarea>
+
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -87,9 +118,14 @@
     <script src="js/helium.mutate.js"></script>
     <script src="js/helium.parallax.js"></script>
     <script type="text/javascript" charset="utf-8">
-    $(function() {
-        $('#your-parallax-id').heliumParallax();
+$(function() {
+    $('#your-parallax-id').heliumParallax({        
+      coeff: 0.5,      // coefficient of vertical parallax movement
+      paraStart: 200,  // parallax lead in distance
+      paraEnd: 200,    // parallax lead out distance
+      hCoeff: 0        // coefficient of horizontal parallax movement
     });
+});
     $('.selector').click(function(){
         $(this).next().focus().select();
         return false;

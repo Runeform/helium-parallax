@@ -48,13 +48,14 @@
         this.vars.item = $(this.element).children('.parallax');
         this.vars.itemTop = $(this.vars.item).offset().top;
         this.vars.itemCenter = this.vars.itemTop + (this.vars.item.height() / 2);
-        this.vars.paraStart = this.vars.itemTop - this.vars.paraStart;
-        this.vars.paraEnd = this.vars.itemTop + this.vars.paraEnd;
+        this.vars.paraStart = this.vars.itemCenter - this.vars.paraStart;
+        this.vars.paraEnd = this.vars.itemCenter + this.vars.paraEnd;
 
         this.vars.startTop = (this.vars.paraStart - this.vars.itemCenter) * this.vars.coeff;
         $(this.vars.item).css('top', this.vars.startTop + 'px');
         this.vars.startLeft = (this.vars.paraStart - this.vars.itemCenter) * this.vars.hCoeff;
         $(this.vars.item).css('left', this.vars.startLeft + 'px');
+        $(this.element).css('height',orig.vars.item.height() + 'px');
         $(window).on('scroll resize', function(event) {
             orig.parallax();
         });
@@ -69,6 +70,7 @@
         this.vars.currTop = $(document).scrollTop();
         this.vars.currCenter = this.vars.currTop + (this.vars.winHeight / 2);
         if (this.vars.currCenter > this.vars.paraStart && this.vars.currCenter < this.vars.paraEnd ){
+          // alert('st:'+ orig.vars.paraStart + ' ed:'+orig.vars.paraEnd + ' c:'+orig.vars.itemCenter);
             this.vars.newTop = (this.vars.currCenter - this.vars.itemCenter) * this.vars.coeff;
            $(this.vars.item).css('top',this.vars.newTop + 'px');
             this.vars.newLeft = (this.vars.currCenter - this.vars.itemCenter) * this.vars.hCoeff;
