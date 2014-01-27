@@ -10,10 +10,10 @@
   // Create defaults 
   var pluginName = "heliumParallax",
       defaults = {        
-      coeff: 0,   
+      coeff: 0.5,   
       paraStart: 200,
       paraEnd: 200,
-      hCoeff: 0.5
+      hCoeff: 0
   },
   priv = {
       currTop: false,
