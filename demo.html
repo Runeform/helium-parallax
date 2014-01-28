@@ -39,7 +39,7 @@
         font-family: "Courier New", Courier, monospace;
         }
     textarea:focus{outline: none; background-color: #444;}
-    a.selector{ font-size: 12px; color:#47b; text-decoration: none; font-weight: bold; float: right;}
+    a.selector{font-size: 12px; color:#47b; text-decoration: none; font-weight: bold; float: right;}
     /* ==========================================================================
        Helium Modal styles
        ========================================================================== */
@@ -49,25 +49,21 @@
     .helium-parallax .parallax{
         position: absolute;
     }
-
     </style>
 </head>
 <body style="margin:0;">
-    <h1>Helium-Modal</h1>
-    <p>Helium-modal is a jQuery modal window script, developed by Harun Eggleton under the open source MIT licence.</p>
+    <h1>Helium-Parallax</h1>
+    <p>Helium-Parallax is a jQuery parallax movement script, developed by Harun Eggleton under the open source MIT licence.</p>
     <h2>Features:</h2>
     <ul class="features">
-        <li>No required set widths</li>
-        <li>Fully CSS stylable</li>
-        <li>Recenters if size of modal changes</li>
-        <li>Customizable show/hide animation</li>
-        <li>Triggered through a link or javascript</li>
+        <li>Multi directional movement</li>
+        <li>Varying speeds</li>
     </ul>
     <h2>Examples:</h2>
-    <br><br><br><br><br><br><br><br><br><br><br><br>>>>>>>>><br>.<br>.<br>.<br>.<br>.<br>.<br>.
+    <br><br><br><br><br><br><br><br><br><br><br><br><hr>
             <div id="your-parallax-id" class="helium-parallax">
-            <img src="http://placehold.it/200x100" alt="" class="parallax" style="opacity:0.6" height="100">
-        </div><br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>>>>>>>><br><br><br><br><br><br><br>
+            <img src="http://placehold.it/200x100" alt="" class="parallax" height="100">
+        </div><hr><br><br><br><br><br><br><br>
     <h2>Usage:</h2>
     <h3>1: include required files</h3>
     <p>include the following scripts as follows before the end of the BODY tag</p>
@@ -92,7 +88,7 @@
    ========================================================================== */
 .helium-parallax{
     position: relative;
-   }
+}
 .helium-parallax .parallax{
     position: absolute;
 }</textarea>
@@ -110,14 +106,27 @@ $(function() {
     });
 });
 </script></textarea>
-
+    <h3>Alternatives: "I want to change the rate or direction of movement"</h3>
+    <p>The coefficient is used to control movement. Values under 1 will move your parallax object slower than your scroll speed.  Values over 1 will move it faster. Negative values will move it in the opposite direction of your scroll.  hCoeff (horizontal coefficient) controls left to right movement.</p>
+    <a href="" class="selector" title="">&#8595; select all</a>
+<textarea readonly name="" style="height:130px;">
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    $('#your-parallax-id').heliumParallax({        
+      coeff: -1.5,     // coefficient of vertical parallax movement
+      paraStart: 200,  // parallax lead in distance
+      paraEnd: 200,    // parallax lead out distance
+      hCoeff: 0.6      // coefficient of horizontal parallax movement
+    });
+});
+</script></textarea>
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
     <script src="js/helium.mutate.js"></script>
     <script src="js/helium.parallax.js"></script>
-    <script type="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
 $(function() {
     $('#your-parallax-id').heliumParallax({        
       coeff: 0.5,      // coefficient of vertical parallax movement
@@ -126,10 +135,10 @@ $(function() {
       hCoeff: 0        // coefficient of horizontal parallax movement
     });
 });
-    $('.selector').click(function(){
-        $(this).next().focus().select();
-        return false;
-    });
-    </script>
+$('.selector').click(function(){
+    $(this).next().focus().select();
+    return false;
+});
+</script>
 </body>
 </html>
