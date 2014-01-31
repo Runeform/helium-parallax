@@ -60,10 +60,16 @@
         <li>Varying speeds</li>
     </ul>
     <h2>Examples:</h2>
-    <br><br><br><br><br><br><br><br><br><br><br><br><hr>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr>
             <div id="your-parallax-id" class="helium-parallax">
-            <img src="http://placehold.it/200x100" alt="" class="parallax" height="100">
-        </div><hr><br><br><br><br><br><br><br>
+            <img src="http://placehold.it/200x100/cc0000/ffffff" alt="" class="parallax" height="100" style="opacity: 0.6;">
+        </div><hr><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><hr>
+            <div id="parallax-id-1" class="helium-parallax">
+            <img src="http://placehold.it/300x150/cc0000/ffffff" alt="" class="parallax" height="150" style="opacity: 0.6;">
+            <div id="parallax-id-2" class="helium-parallax">
+            <img src="http://placehold.it/300x150/0000cc/ffffff" alt="" class="parallax" height="150" style="opacity: 0.6;">
+        </div><hr><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <h2>Usage:</h2>
     <h3>1: include required files</h3>
     <p>include the following scripts as follows before the end of the BODY tag</p>
@@ -119,6 +125,32 @@ $(function() {
     });
 });
 </script></textarea>
+    <h3>Alternatives: "I want multiple parallax objects"</h3>
+    <p>No problem just make sure you have 2 sets of HTML with different id's and 2 initializations.</p>
+    <a href="" class="selector" title="">&#8595; select all</a>
+<textarea readonly name="" style="height:80px;">
+<div id="parallax-id-1" class="helium-parallax">
+    <img src="http://placehold.it/200x100" alt="" class="parallax">
+</div>
+<div id="parallax-id-2" class="helium-parallax">
+    <img src="http://placehold.it/200x100/ffffff/000000" alt="" class="parallax">
+</div></textarea>
+    <a href="" class="selector" title="">&#8595; select all</a>
+<textarea readonly name="" style="height:180px;">
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    $('#parallax-id-1').heliumParallax({        
+      coeff: 0.8,      // coefficient of vertical parallax movement
+      paraStart: 200,  // parallax lead in distance
+      paraEnd: 200     // parallax lead out distance
+    });
+    $('#parallax-id-2').heliumParallax({        
+      coeff: 0.4,      // coefficient of vertical parallax movement
+      paraStart: 200,  // parallax lead in distance
+      paraEnd: 200     // parallax lead out distance
+    });
+});
+</script></textarea>
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -132,6 +164,16 @@ $(function() {
       paraStart: 200,  // parallax lead in distance
       paraEnd: 200,    // parallax lead out distance
       hCoeff: 0        // coefficient of horizontal parallax movement
+    });
+    $('#parallax-id-1').heliumParallax({        
+      coeff: 0.8,      // coefficient of vertical parallax movement
+      paraStart: 250,  // parallax lead in distance
+      paraEnd: 250    // parallax lead out distance
+    });
+    $('#parallax-id-2').heliumParallax({        
+      coeff: 0.4,      // coefficient of vertical parallax movement
+      paraStart: 200,  // parallax lead in distance
+      paraEnd: 200    // parallax lead out distance
     });
 });
 $('.selector').click(function(){
