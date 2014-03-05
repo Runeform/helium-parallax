@@ -15,7 +15,7 @@
        ========================================================================== */
     body{
         margin:0;
-        padding: 20px 60px;
+        padding:30px 6%;
         background-color: #efefef;
         font-family: helvetica, sans-serif;
         color:#777;
@@ -25,8 +25,8 @@
         margin: 0;
         padding: 0 0 15px;
         }
-    h2{padding: 15px 0 15px;}
-    p{margin:0 0 6px;}
+    h2{ padding: 15px 0 15px;}
+    p{ margin:0 0 6px;}
     textarea{
         margin:0 0 10px;
         width: 100%;
@@ -39,7 +39,15 @@
         font-family: "Courier New", Courier, monospace;
         }
     textarea:focus{outline: none; background-color: #444;}
-    a.selector{font-size: 12px; color:#47b; text-decoration: none; font-weight: bold; float: right;}
+    ul.features{
+        margin:0;
+        font-size: 14px;
+        }
+    ul.features li{ margin-bottom: 2px;}
+    a.selector{ font-size: 12px; color:#47b; text-decoration: none; font-weight: bold; float: right;}
+    a.selector:hover{color:#359;}
+    .btn{ display: inline-block; padding: 5px 20px; color: #f2f2f2; background-color: #47b; text-decoration: none;  text-transform: capitalize; font-size: 15px; -webkit-font-smoothing: antialiased;}
+    .btn:hover{cursor: pointer; background-color: #359;}
     /* ==========================================================================
        Helium Modal styles
        ========================================================================== */
@@ -54,6 +62,7 @@
 <body style="margin:0;">
     <h1>Helium-Parallax</h1>
     <p>Helium-Parallax is a jQuery parallax movement script, developed by Harun Eggleton under the open source MIT licence.</p>
+    <a href="https://github.com/Runeform/helium-parallax/releases/latest" title="" class="btn" target="_blank">download latest release</a>
     <h2>Features:</h2>
     <ul class="features">
         <li>Multi directional movement</li>
