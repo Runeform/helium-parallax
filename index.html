@@ -61,12 +61,13 @@
 </head>
 <body style="margin:0;">
     <h1>Helium-Parallax</h1>
-    <p>Helium-Parallax is a jQuery parallax movement script, developed by Harun Eggleton under the open source MIT licence.</p>
+    <p>Helium-Parallax is a jQuery parallax animation script, developed by Harun Eggleton under the open source MIT licence.</p>
     <a href="https://github.com/Runeform/helium-parallax/releases/latest" title="" class="btn" target="_blank">download latest release</a>
     <h2>Features:</h2>
     <ul class="features">
-        <li>Multi directional movement</li>
-        <li>Varying speeds</li>
+        <li>Animate any numerical CSS property with scrollbar movement</li>
+        <li>Scroll movement relationships (linear, reverse, swing)</li>
+        <li>Customize lead in and lead out distance for your scroll effect</li>
     </ul>
     <h2>Examples:</h2>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr>
@@ -107,30 +108,32 @@
     position: absolute;
 }</textarea>
     <h3>4: initialize</h3>
-    <p>Add the following intialization script in your footer, after included scripts. this example shows all available options.</p>
+    <p>Add the following intialization script in your footer, after included scripts. this example shows all available options with thier default values.</p>
     <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:130px;">
+<textarea readonly name="" style="height:150px;">
 <script type="text/javascript" charset="utf-8">
 $(function() {
     $('#your-parallax-id').heliumParallax({        
-      coeff: 0.5,      // coefficient of vertical parallax movement
-      paraStart: 200,  // parallax lead in distance
-      paraEnd: 200,    // parallax lead out distance
-      hCoeff: 0        // coefficient of horizontal parallax movement
+      paraStart: 200,      // distance from the origin that parallax scroll effect will start
+      paraEnd: 200,        // distance from the origin that parallax scroll effect will end
+      property: ['top'],   // css property (or properties) to animate
+      minVal: ['-150px'],  // minimum value for css property
+      maxVal: ['150px'],   // maximum value for css property
+      relate: ['linear']   // relationship to scroll movement : linear, reverse, swing, reverseSwing
     });
 });
 </script></textarea>
-    <h3>Alternatives: "I want to change the rate or direction of movement"</h3>
-    <p>The coefficient is used to control movement. Values under 1 will move your parallax object slower than your scroll speed.  Values over 1 will move it faster. Negative values will move it in the opposite direction of your scroll.  hCoeff (horizontal coefficient) controls left to right movement.</p>
+    <h3>Alternatives: "I want to change multiple css properties"</h3>
+    <p>No problem. just separate them with a comma.  you must do the same with "minVal", "maxVal", and "relate".  The values you enter are related to eachother sequentially.  In this example '0.5','0.95', and 'swing' all apply to 'opacity'.</p>
     <a href="" class="selector" title="">&#8595; select all</a>
 <textarea readonly name="" style="height:130px;">
 <script type="text/javascript" charset="utf-8">
 $(function() {
     $('#your-parallax-id').heliumParallax({        
-      coeff: -1.5,     // coefficient of vertical parallax movement
-      paraStart: 200,  // parallax lead in distance
-      paraEnd: 200,    // parallax lead out distance
-      hCoeff: 0.6      // coefficient of horizontal parallax movement
+      property: ['top','opacity'],  // css property (or properties) to animate
+      minVal: ['-100px','0.5'],     // minimum value for css property
+      maxVal: ['100px','0.95'],     // maximum value for css property
+      relate: ['linear','swing']    // relationship to scroll movement : linear, reverse, swing, reverseSwing
     });
 });
 </script></textarea>
@@ -145,18 +148,16 @@ $(function() {
     <img src="http://placehold.it/200x100/ffffff/000000" alt="" class="parallax">
 </div></textarea>
     <a href="" class="selector" title="">&#8595; select all</a>
-<textarea readonly name="" style="height:180px;">
+<textarea readonly name="" style="height:160px;">
 <script type="text/javascript" charset="utf-8">
 $(function() {
-    $('#parallax-id-1').heliumParallax({        
-      coeff: 0.8,      // coefficient of vertical parallax movement
-      paraStart: 200,  // parallax lead in distance
-      paraEnd: 200     // parallax lead out distance
+    $('#parallax-id-1').heliumParallax({
+      minVal: ['-170px'],
+      maxVal: ['170px']
     });
-    $('#parallax-id-2').heliumParallax({        
-      coeff: 0.4,      // coefficient of vertical parallax movement
-      paraStart: 200,  // parallax lead in distance
-      paraEnd: 200     // parallax lead out distance
+    $('#parallax-id-2').heliumParallax({
+      minVal: ['-100px'],
+      maxVal: ['100px']
     });
 });
 </script></textarea>
@@ -164,25 +165,19 @@ $(function() {
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
-    <script src="js/helium.mutate.js"></script>
     <script src="js/helium.parallax.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(function() {
     $('#your-parallax-id').heliumParallax({        
-      coeff: 0.5,      // coefficient of vertical parallax movement
-      paraStart: 200,  // parallax lead in distance
-      paraEnd: 200,    // parallax lead out distance
-      hCoeff: 0        // coefficient of horizontal parallax movement
+      property: ['top','opacity'],
+      minVal: ['-100px','0.5'],
+      maxVal: ['100px','0.95'],
+      relate: ['linear','swing']
     });
-    $('#parallax-id-1').heliumParallax({        
-      coeff: 0.8,      // coefficient of vertical parallax movement
-      paraStart: 250,  // parallax lead in distance
-      paraEnd: 250    // parallax lead out distance
-    });
-    $('#parallax-id-2').heliumParallax({        
-      coeff: 0.4,      // coefficient of vertical parallax movement
-      paraStart: 200,  // parallax lead in distance
-      paraEnd: 200    // parallax lead out distance
+    $('#parallax-id-1').heliumParallax();
+    $('#parallax-id-2').heliumParallax({
+      minVal: ['-100px'],
+      maxVal: ['100px']
     });
 });
 $('.selector').click(function(){

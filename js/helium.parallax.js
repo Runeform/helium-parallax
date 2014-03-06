@@ -8,23 +8,24 @@
 ;(function ( $, window, document, undefined ) {
   // Create defaults 
   var pluginName = "heliumParallax",
-      defaults = {        
-      coeff: 0.5,   
-      paraStart: 200,
-      paraEnd: 200,
-      hCoeff: 0
+      defaults = {     
+      paraStart: 200,      // distance from the origin that parallax scroll effect will start
+      paraEnd: 200,        // distance from the origin that parallax scroll effect will end
+      property: ['top'],   // css property (or properties) to animate
+      minVal: ['-150px'],  // minimum value for css property
+      maxVal: ['150px'],   // maximum value for css property
+      relate: ['linear']   // relationship to scroll movement : linear, reverse, swing, reverseSwing
   },
   priv = {
       currTop: false,
       currCenter: false,
+      currPercent: false,
       itemTop: false,
       itemCenter: false,
       item: false,
       winHeight: false,
-      newTop: false,
-      newLeft: false,
-      startLeft: false,
-      startTop: false
+      newVal: false,
+      valUnit: new Array()
   };
 
   function Plugin ( element, options ) {
@@ -50,14 +51,20 @@
         this.vars.paraStart = this.vars.itemCenter - this.vars.paraStart;
         this.vars.paraEnd = this.vars.itemCenter + this.vars.paraEnd;
 
-        this.vars.startTop = (this.vars.paraStart - this.vars.itemCenter) * this.vars.coeff;
-        $(this.vars.item).css('top', this.vars.startTop + 'px');
-        this.vars.startLeft = (this.vars.paraStart - this.vars.itemCenter) * this.vars.hCoeff;
-        $(this.vars.item).css('left', this.vars.startLeft + 'px');
+        for (i = 0; i<this.vars.property.length; i++) {
+          orig.vars.valUnit[i] = orig.vars.minVal[i].replace(/\d+/g, '').replace(/-/g, '');
+          if(orig.vars.valUnit[i] == '.'){
+            orig.vars.valUnit[i] = ' ';
+          }
+          orig.vars.minVal[i] = parseFloat(orig.vars.minVal[i],10);
+          orig.vars.maxVal[i] = parseFloat(orig.vars.maxVal[i],10);
+        }
+
         $(this.element).css('height',orig.vars.item.height() + 'px');
         $(window).on('scroll resize', function(event) {
             orig.parallax();
         });
+        this.parallax();
       },
 
 //============================================================================
@@ -68,13 +75,27 @@
         this.vars.winHeight = $(window).height();
         this.vars.currTop = $(document).scrollTop();
         this.vars.currCenter = this.vars.currTop + (this.vars.winHeight / 2);
-        if (this.vars.currCenter > this.vars.paraStart && this.vars.currCenter < this.vars.paraEnd ){
-          // alert('st:'+ orig.vars.paraStart + ' ed:'+orig.vars.paraEnd + ' c:'+orig.vars.itemCenter);
-            this.vars.newTop = (this.vars.currCenter - this.vars.itemCenter) * this.vars.coeff;
-           $(this.vars.item).css('top',this.vars.newTop + 'px');
-            this.vars.newLeft = (this.vars.currCenter - this.vars.itemCenter) * this.vars.hCoeff;
-           $(this.vars.item).css('left',this.vars.newLeft + 'px');
+        if (this.vars.currCenter < this.vars.paraStart){
+          this.vars.currCenter = this.vars.paraStart;
+        }
+        if (this.vars.currCenter > this.vars.paraEnd){
+          this.vars.currCenter = this.vars.paraEnd;
+        }
 
+        for (i = 0; i<this.vars.property.length; i++) {
+          orig.vars.currPercent = ((orig.vars.currCenter - orig.vars.paraStart) / (orig.vars.paraEnd - orig.vars.paraStart));
+          if(orig.vars.relate[i] == 'reverse'){
+            orig.vars.currPercent = 1 - orig.vars.currPercent;
+          }
+          if(orig.vars.relate[i] == 'swing'){
+            orig.vars.currPercent = Math.pow(orig.vars.currPercent-0.5,2) / 0.5;
+            orig.vars.currPercent = Math.pow(orig.vars.currPercent-0.5,2) * 4;
+          }
+          if(orig.vars.relate[i] == 'reverseSwing'){
+            orig.vars.currPercent = Math.pow(orig.vars.currPercent-0.5,2) * 4;
+          }
+          orig.vars.newVal = orig.vars.minVal[i] + ((orig.vars.maxVal[i] - orig.vars.minVal[i]) * orig.vars.currPercent);
+          $(orig.vars.item).css(orig.vars.property[i],orig.vars.newVal + orig.vars.valUnit[i]);
         }
 
       }
