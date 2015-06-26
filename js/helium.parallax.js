@@ -14,12 +14,15 @@
       property: ['top'],   // css property (or properties) to animate
       minVal: ['-150px'],  // minimum value for css property
       maxVal: ['150px'],   // maximum value for css property
+      valTemplate: [false],// template for where the *value* should be placed in the value.  ie "rotate(*value*deg)"
       relate: ['linear']   // relationship to scroll movement : linear, reverse, swing, reverseSwing
   },
   priv = {
       currTop: false,
       currCenter: false,
       currPercent: false,
+      startPoint: false,
+      endPoint: false,
       itemTop: false,
       itemCenter: false,
       item: false,
@@ -45,25 +48,37 @@
       init: function () {
         var orig = this;
 
-        this.vars.item = $(this.element).children('.parallax');
-        this.vars.itemTop = $(this.vars.item).offset().top;
-        this.vars.itemCenter = this.vars.itemTop + (this.vars.item.height() / 2);
-        this.vars.paraStart = this.vars.itemCenter - this.vars.paraStart;
-        this.vars.paraEnd = this.vars.itemCenter + this.vars.paraEnd;
-
         for (i = 0; i<this.vars.property.length; i++) {
           orig.vars.valUnit[i] = orig.vars.minVal[i].replace(/\d+/g, '').replace(/-/g, '');
-          if(orig.vars.valUnit[i] == '.'){
-            orig.vars.valUnit[i] = ' ';
-          }
+          if(orig.vars.valUnit[i] == '.'){ orig.vars.valUnit[i] = ' ' }
           orig.vars.minVal[i] = parseFloat(orig.vars.minVal[i],10);
           orig.vars.maxVal[i] = parseFloat(orig.vars.maxVal[i],10);
         }
 
-        $(this.element).css('height',orig.vars.item.height() + 'px');
-        $(window).on('scroll resize', function(event) {
+        this.vars.item = $(this.element);
+        $(window).on('resize', function(){
+            orig.calc();
+        });
+        $(window).on('scroll', function(){
             orig.parallax();
         });
+        this.calc();
+        this.parallax();
+      },
+
+//============================================================================
+// Calculate key scroll points
+//============================================================================
+      calc: function () {
+        var orig = this;
+
+        for (i = 0; i<this.vars.property.length; i++) {
+          orig.vars.item.css(orig.vars.property[i], '');
+        }
+        this.vars.itemTop = $(this.vars.item).offset().top;
+        this.vars.itemCenter = this.vars.itemTop + (this.vars.item.height() / 2);
+        this.vars.startPoint = this.vars.itemCenter - this.vars.paraStart;
+        this.vars.endPoint = this.vars.itemCenter + this.vars.paraEnd;
         this.parallax();
       },
 
@@ -75,15 +90,15 @@
         this.vars.winHeight = $(window).height();
         this.vars.currTop = $(document).scrollTop();
         this.vars.currCenter = this.vars.currTop + (this.vars.winHeight / 2);
-        if (this.vars.currCenter < this.vars.paraStart){
-          this.vars.currCenter = this.vars.paraStart;
+        if (this.vars.currCenter < this.vars.startPoint){
+          this.vars.currCenter = this.vars.startPoint;
         }
-        if (this.vars.currCenter > this.vars.paraEnd){
-          this.vars.currCenter = this.vars.paraEnd;
+        if (this.vars.currCenter > this.vars.endPoint){
+          this.vars.currCenter = this.vars.endPoint;
         }
 
         for (i = 0; i<this.vars.property.length; i++) {
-          orig.vars.currPercent = ((orig.vars.currCenter - orig.vars.paraStart) / (orig.vars.paraEnd - orig.vars.paraStart));
+          orig.vars.currPercent = ((orig.vars.currCenter - orig.vars.startPoint) / (orig.vars.endPoint - orig.vars.startPoint));
           if(orig.vars.relate[i] == 'reverse'){
             orig.vars.currPercent = 1 - orig.vars.currPercent;
           }
@@ -95,7 +110,12 @@
             orig.vars.currPercent = Math.pow(orig.vars.currPercent-0.5,2) * 4;
           }
           orig.vars.newVal = orig.vars.minVal[i] + ((orig.vars.maxVal[i] - orig.vars.minVal[i]) * orig.vars.currPercent);
-          $(orig.vars.item).css(orig.vars.property[i],orig.vars.newVal + orig.vars.valUnit[i]);
+          if (orig.vars.valTemplate[i]){
+            var splitTemplate = orig.vars.valTemplate[i].split('*value*');
+            $(orig.vars.item).css(orig.vars.property[i],splitTemplate[0] + orig.vars.newVal + splitTemplate[1]);            
+          } else {
+            $(orig.vars.item).css(orig.vars.property[i],orig.vars.newVal + orig.vars.valUnit[i]);
+          }
         }
 
       }
