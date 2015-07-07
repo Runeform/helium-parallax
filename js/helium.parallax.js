@@ -1,6 +1,7 @@
 /* 
+ * helium-parallax v2.2
  * Developed by Harun eggleton - Under MIT License
- * jquery 1.8.3
+ * jquery 1.11.0
  * jQuery Boilerplate - v3.3.1 ( http://jqueryboilerplate.com ) - Made by Zeno Rocha - Under MIT License
  */
 
@@ -14,7 +15,7 @@
       property: ['top'],   // css property (or properties) to animate
       minVal: ['-150px'],  // minimum value for css property
       maxVal: ['150px'],   // maximum value for css property
-      valTemplate: [false],// template for where the *value* should be placed in the value.  ie "rotate(*value*deg)"
+      valTemplate: [false],// template for complex css values. The *value* should be placed where the number should be placed.  ie "rotate(*value*deg)"
       relate: ['linear']   // relationship to scroll movement : linear, reverse, swing, reverseSwing
   },
   priv = {
@@ -28,7 +29,7 @@
       item: false,
       winHeight: false,
       newVal: false,
-      valUnit: new Array()
+      valUnit: false
   };
 
   function Plugin ( element, options ) {
@@ -47,10 +48,9 @@
 //============================================================================
       init: function () {
         var orig = this;
-
-        for (i = 0; i<this.vars.property.length; i++) {
-          orig.vars.valUnit[i] = orig.vars.minVal[i].replace(/\d+/g, '').replace(/-/g, '');
-          if(orig.vars.valUnit[i] == '.'){ orig.vars.valUnit[i] = ' ' }
+        orig.vars.valUnit = [];
+        for (var i = 0; i<this.vars.property.length; i++) {
+          orig.vars.valUnit[i] = orig.vars.minVal[i].replace(/[\d\.\-]+/g, '');
           orig.vars.minVal[i] = parseFloat(orig.vars.minVal[i],10);
           orig.vars.maxVal[i] = parseFloat(orig.vars.maxVal[i],10);
         }
@@ -72,7 +72,7 @@
       calc: function () {
         var orig = this;
 
-        for (i = 0; i<this.vars.property.length; i++) {
+        for (var i = 0; i<this.vars.property.length; i++) {
           orig.vars.item.css(orig.vars.property[i], '');
         }
         this.vars.itemTop = $(this.vars.item).offset().top;
@@ -89,15 +89,18 @@
         var orig = this;
         this.vars.winHeight = $(window).height();
         this.vars.currTop = $(document).scrollTop();
-        this.vars.currCenter = this.vars.currTop + (this.vars.winHeight / 2);
+        var paraPoint = (this.vars.winHeight / 2);
+        if(this.vars.itemCenter < paraPoint){
+          paraPoint = this.vars.itemCenter;
+        }
+        this.vars.currCenter = this.vars.currTop + paraPoint;
         if (this.vars.currCenter < this.vars.startPoint){
           this.vars.currCenter = this.vars.startPoint;
         }
         if (this.vars.currCenter > this.vars.endPoint){
           this.vars.currCenter = this.vars.endPoint;
         }
-
-        for (i = 0; i<this.vars.property.length; i++) {
+        for (var i = 0; i<this.vars.property.length; i++) {
           orig.vars.currPercent = ((orig.vars.currCenter - orig.vars.startPoint) / (orig.vars.endPoint - orig.vars.startPoint));
           if(orig.vars.relate[i] == 'reverse'){
             orig.vars.currPercent = 1 - orig.vars.currPercent;
@@ -112,7 +115,7 @@
           orig.vars.newVal = orig.vars.minVal[i] + ((orig.vars.maxVal[i] - orig.vars.minVal[i]) * orig.vars.currPercent);
           if (orig.vars.valTemplate[i]){
             var splitTemplate = orig.vars.valTemplate[i].split('*value*');
-            $(orig.vars.item).css(orig.vars.property[i],splitTemplate[0] + orig.vars.newVal + splitTemplate[1]);            
+            $(orig.vars.item).css(orig.vars.property[i],splitTemplate[0] + orig.vars.newVal + orig.vars.valUnit[i] + splitTemplate[1]);            
           } else {
             $(orig.vars.item).css(orig.vars.property[i],orig.vars.newVal + orig.vars.valUnit[i]);
           }

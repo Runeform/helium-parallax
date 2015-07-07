@@ -61,12 +61,12 @@
 </head>
 <body style="margin:0;">
     <h1>Helium-Parallax</h1>
-    <p>Helium-Parallax is a jQuery parallax animation script, developed by Harun Eggleton under the open source MIT licence. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing.Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing.Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing.Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing.Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing. Wrap this text for testing.</p>
+    <p>Helium-Parallax is a jQuery parallax animation script, developed by Harun Eggleton under the open source MIT licence. </p>
     <a href="https://github.com/Runeform/helium-parallax/releases/latest" title="" class="btn" target="_blank">download latest release</a>
     <h2>Features:</h2>
     <ul class="features">
         <li>Animate any numerical CSS property with scrollbar movement</li>
-        <li>Scroll movement relationships (linear, reverse, swing)</li>
+        <li>Scroll movement relationships (linear, reverse, swing, reverse swing)</li>
         <li>Customize lead in and lead out distance for your scroll effect</li>
     </ul>
     <h2>Examples:</h2>
@@ -84,17 +84,17 @@
     <p>include the following scripts as follows before the end of the BODY tag</p>
     <a href="" class="selector" title="">&#8595; select all</a>
 <textarea readonly name="" style="height:35px;">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="js/helium.parallax.js"></script></textarea>
     <h3>2: HTML</h3>
-    <p>Wrap your parallax element in div and use the div to position your element.  eg.</p>
+    <p>All that is required in your html is an element that can be referenced by a jquery selector. In this example we are using ID. Remember to wrap your parallax element in div with position and height if to intend to use parallax for positioning. This will hold its place in the document flow. helium-parallax simply animates the specified css properties. you are responsible for layout and positioning requirements etc.</p>
     <a href="" class="selector" title="">&#8595; select all</a>
 <textarea readonly name="" style="height:45px;">
 <div id="your-parallax-id" class="helium-parallax">
     <img src="http://placehold.it/200x100" alt="" class="parallax">
 </div></textarea>
     <h3>3: CSS</h3>
-    <p>include the following css in your primary CSS location.</p>
+    <p>I recomend the following css for position parallax in your primary CSS location.</p>
     <a href="" class="selector" title="">&#8595; select all</a>
 <textarea readonly name="" style="height:120px;">
 /* ==========================================================================
@@ -107,7 +107,7 @@
     position: absolute;
 }</textarea>
     <h3>4: initialize</h3>
-    <p>Add the following intialization script in your footer, after included scripts. this example shows all available options with thier default values.</p>
+    <p>Add the following intialization script in your footer, after included scripts. this example shows all available options with thier default values. you need only specify values that differ from the defaults.</p>
     <a href="" class="selector" title="">&#8595; select all</a>
 <textarea readonly name="" style="height:150px;">
 <script type="text/javascript" charset="utf-8">
@@ -118,6 +118,7 @@ $(function() {
       property: ['top'],   // css property (or properties) to animate
       minVal: ['-150px'],  // minimum value for css property
       maxVal: ['150px'],   // maximum value for css property
+      valTemplate: [false],// template for complex css values. The *value* should be placed where the number should be placed.  ie "rotate(*value*deg)"
       relate: ['linear']   // relationship to scroll movement : linear, reverse, swing, reverseSwing
     });
 });
