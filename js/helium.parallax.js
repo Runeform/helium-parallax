@@ -59,7 +59,7 @@
         $(window).on('resize', function(){
             orig.calc();
         });
-        $(window).on('scroll', function(){
+        $(window).on('scroll touchmove', function(){
             orig.parallax();
         });
         this.calc();
